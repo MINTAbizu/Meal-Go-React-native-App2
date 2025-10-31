@@ -3,13 +3,13 @@ import { StyleSheet, Text, View } from "react-native";
 import { Card } from "react-native-paper";
 import styled from "styled-components";
 
-const Name=styled.Text`
-color:'orange',
 
-
+const Name = styled(Text)`
+  color: ${({ theme }) => theme.colors.ui.error};
 `
+
 const RestaurantCard=styled(Card)`
-  background-color: white;
+  background-color: ${({theme})=>theme.colors.bg.primary};
    margin: 10px;
   border-radius: 10px;
 

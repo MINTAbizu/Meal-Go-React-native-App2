@@ -2,11 +2,17 @@ import React from "react";
 
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import RstorantScreen from "./src/component/features/Screen/RstorantScreen";
+import { ThemeProvider } from "styled-components";
+import { theme } from "./src/themee/inde";
 // import RstorantScreen from './src/component/features'
 export default function App() {
   return (
     <>
-    <RstorantScreen/>
+    <ThemeProvider theme={theme}> 
+      <RstorantScreen/>
+    </ThemeProvider>
+    
+   
      
 
       <ExpoStatusBar style="auto" />
