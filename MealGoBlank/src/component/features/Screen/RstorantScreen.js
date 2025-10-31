@@ -76,6 +76,8 @@ const data = [
     isClosedTemporarily: true,
     photos: ["https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=800&auto=format&fit=crop"],
     address: "Shashamane",
+     iscafee : true,
+    ishotel :true,
   },
 ];
 

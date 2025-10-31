@@ -2,8 +2,9 @@ import React from "react";
 import { Text, View } from "react-native";
 import { Card } from "react-native-paper";
 import styled from "styled-components/native";
-import { FontAwesome, MaterialIcons } from "@expo/vector-icons"; // ⭐ & ✅ ❌ icons
+import { FontAwesome, FontAwesome5, MaterialIcons } from "@expo/vector-icons"; // icons
 
+// Styled Components
 const RestaurantCard = styled(Card)`
   background-color: ${({ theme }) => theme.colors.bg.primary};
   margin: 10px;
@@ -41,6 +42,18 @@ const Address = styled(Text)`
   margin-bottom: 6px;
 `;
 
+const TypeRow = styled(View)`
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+`;
+
+const TypeText = styled(Text)`
+  font-size: 14px;
+  color: ${({ theme }) => theme.colors.text.secondary};
+`;
+
 const StatusRow = styled(View)`
   flex-direction: row;
   align-items: center;
@@ -63,6 +76,7 @@ const Rating = styled(View)`
   margin-vertical: 4px;
 `;
 
+// Main Component
 export default function RestaurantInfo({ restaurant = {} }) {
   const {
     name = "Some Restaurant",
@@ -73,9 +87,11 @@ export default function RestaurantInfo({ restaurant = {} }) {
     rating = 5,
     isClosedTemporarily = true,
     isOpenNow = true,
+    isresurant = true,
+    iscafee = false,
+    ishotel = false,
   } = restaurant;
 
-  // Create an array for rating stars
   const ratingArray = Array.from(new Array(Math.floor(rating)));
 
   return (
@@ -83,9 +99,34 @@ export default function RestaurantInfo({ restaurant = {} }) {
       <CardCover key={name} source={{ uri: photos[0] }} />
 
       <CardContainer>
-        <Name>{name}</Name>
+       <View style={{display:'flex' ,flexDirection:'row', gap:5 }}>
+         <Name>{name}</Name>
 
-        <Rating>
+        {/* Type Icons */}
+        <TypeRow>
+          {isresurant && (
+            <>
+              <FontAwesome5 name="utensils" size={16} color="#2182BD" />
+              <TypeText>Restaurant</TypeText>
+            </>
+          )}
+          {iscafee && (
+            <>
+              <FontAwesome5 name="coffee" size={16} color="#F28B00" />
+              <TypeText>Cafe</TypeText>
+            </>
+          )}
+          {ishotel && (
+            <>
+              <MaterialIcons name="hotel" size={16} color="#4CAF50" />
+              <TypeText>Hotel</TypeText>
+            </>
+          )}
+        </TypeRow>
+       </View>
+
+        {/* Rating Stars */}
+        <Rating  style={{justifyContent:"center"}}>
           {ratingArray.map((_, index) => (
             <FontAwesome
               key={`star-${index}`}
@@ -97,12 +138,15 @@ export default function RestaurantInfo({ restaurant = {} }) {
           ))}
         </Rating>
 
-        <Address>{address}</Address>
+        {/* Address */}
+        <Address style={{}}>{address}</Address>
 
+        {/* Open / Closed Status */}
         <StatusRow>
           {isClosedTemporarily && (
             <Closed>
-              CLOSED TEMPORARILY <MaterialIcons name="error-outline" size={16} color="red" />
+              CLOSED TEMPORARILY{" "}
+              <MaterialIcons name="error-outline" size={16} color="red" />
             </Closed>
           )}
           {isOpenNow && (
