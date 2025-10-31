@@ -1,60 +1,47 @@
 import React from "react";
-
-import { StatusBar as ExpoStatusBar } from "expo-status-bar";
-import RstorantScreen from "./src/component/features/Screen/RstorantScreen";
+import { Text, View } from "react-native";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./src/themee/inde";
-// import RstorantScreen from './src/component/features'
+import RstorantScreen from "./src/component/features/Screen/RstorantScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { MaterialIcons } from "@expo/vector-icons";
+import ProfileScreen from "./src/component/Tab/ProfileScreen";
+import SettingsScreen from "./src/component/Tab/SettingsScreen";
+import MapScreen from "./src/component/Tab/MapScreen";
+
+const Tab = createBottomTabNavigator();
+
+
+
 export default function App() {
   return (
-    <>
-    <ThemeProvider theme={theme}> 
-      <RstorantScreen/>
-    </ThemeProvider>
-    
-   
-     
+    <ThemeProvider theme={theme}>
+      <NavigationContainer>
+        <Tab.Navigator
+          initialRouteName="Restaurants"
+          screenOptions={({ route }) => ({
+            headerShown: false, // hide top header
+            tabBarIcon: ({ color, size }) => {
+              let iconName;
 
-      <ExpoStatusBar style="auto" />
-    </>
+               if (route.name === "Restaurants") iconName = "restaurant";
+              if (route.name === "Map") iconName = "map";
+              if (route.name === "Settings") iconName = "settings";
+              if (route.name === "Profile") iconName = "person";
+
+              return <MaterialIcons name={iconName} size={size} color={color} />;
+            },
+            tabBarActiveTintColor: "#2182BD",
+            tabBarInactiveTintColor: "gray",
+          })}
+        >
+        <Tab.Screen name="Restaurants" component={RstorantScreen} />
+          <Tab.Screen name="Map" component={MapScreen} />
+          <Tab.Screen name="Settings" component={SettingsScreen} />
+          <Tab.Screen name="Profile" component={ProfileScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#f8f9fa",
-//     marginTop: StatusBar.currentHeight || 0,
-//   },
-
-//   searchbarContainer: {
-//     // paddingHorizontal: 16,
-//     // paddingVertical: 12,
-//     backgroundColor: "#f8f9fa",
-//     // iOS Shadow
-//     shadowColor: "#000",
-//     shadowOffset: { width: 0, height: 2 },
-//     shadowOpacity: 0.15,
-//     shadowRadius: 3.5,
-//     // Android Shadow
-//     elevation: 5,
-   
-//     margin:12
-//   },
-
-//   searchbar: {
-//     borderRadius: 12,
-//     backgroundColor: "white",
-//   },
-
-//   // content: {
-//   //   flex: 1,
-//   //   backgroundColor: "green",
-//   //   borderTopLeftRadius: 20,
-//   //   borderTopRightRadius: 20,
-//   //   marginTop: 10,
-//   //   padding: 20,
-//   // },
-
- 
-// });
