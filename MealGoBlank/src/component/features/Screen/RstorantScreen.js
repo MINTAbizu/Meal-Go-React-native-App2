@@ -1,87 +1,103 @@
-import React from 'react'
+import React from 'react';
+import { Platform, StatusBar, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Text, View, StatusBar, StyleSheet, Platform } from "react-native";
-
 import { Searchbar } from "react-native-paper";
 import RstorantInfo from '../Restorant/RstorantInfo';
-import styled from 'styled-components';
- const SafeArea = styled(SafeAreaView)`
+import styled from 'styled-components/native';
+
+const SafeArea = styled(SafeAreaView)`
   flex: 1;
   background-color: #f8f9fa;
   margin-top: ${Platform.OS === 'android' ? StatusBar.currentHeight : 0}px;
-`
- const SearchBarContainer = styled(View)`
+`;
+
+const SearchBarContainer = styled.View`
   background-color: #f8f9fa;
   margin: 12px;
   elevation: 5;
 
-  
   shadow-color: #000;
   shadow-opacity: 0.15;
   shadow-radius: 3.5px;
   shadow-offset: 0px 2px;
 `;
-function RstorantScreen() {
+
+const data = [
+  {
+    id: "1",
+    name: "Burger Place",
+    rating: 4,
+    isOpenNow: true,
+    isClosedTemporarily: false,
+    photos: ["https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=800&auto=format&fit=crop"],
+    address: "Addis Ababa",
+  },
+  {
+    id: "2",
+    name: "Pizza House",
+    rating: 5,
+    isOpenNow: false,
+    isClosedTemporarily: true,
+    photos: ["https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=800&auto=format&fit=crop"],
+    address: "Shashamane",
+  },
+  {
+    id: "3",
+    name: "Pizza House",
+    rating: 5,
+    isOpenNow: false,
+    isClosedTemporarily: true,
+    photos: ["https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=800&auto=format&fit=crop"],
+    address: "Shashamane",
+  },
+  {
+    id: "4",
+    name: "Pizza House",
+    rating: 5,
+    isOpenNow: false,
+    isClosedTemporarily: true,
+    photos: ["https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=800&auto=format&fit=crop"],
+    address: "Shashamane",
+  },
+  {
+    id: "5",
+    name: "Pizza House",
+    rating: 5,
+    isOpenNow: false,
+    isClosedTemporarily: true,
+    photos: ["https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=800&auto=format&fit=crop"],
+    address: "Shashamane",
+  },
+  {
+    id: "6",
+    name: "Pizza House",
+    rating: 5,
+    isOpenNow: false,
+    isClosedTemporarily: true,
+    photos: ["https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=800&auto=format&fit=crop"],
+    address: "Shashamane",
+  },
+];
+
+export default function RstorantScreen() {
   return (
-    <>
-    <SafeArea >
-        {/* Searchbar Section */}
-        <SearchBarContainer >
-          <Searchbar
-            placeholder="Search..."
-            style={styles.searchbar}
-            inputStyle={{ fontSize: 16 }}
-          />
-        </SearchBarContainer>
-       
+    <SafeArea>
+      {/* Searchbar */}
+      <SearchBarContainer>
+        <Searchbar
+          placeholder="Search..."
+          style={{ borderRadius: 12, backgroundColor: "white" }}
+          inputStyle={{ fontSize: 16 }}
+        />
+      </SearchBarContainer>
 
-        {/* Main Content */}
-        <View  >
-          <RstorantInfo/>
-        </View>
-      </SafeArea>
-
-      
-    </>
-  )
+      {/* Restaurant List */}
+      <FlatList
+        data={data}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <RstorantInfo restaurant={item} />}
+        contentContainerStyle={{ paddingBottom: 12 }}
+      />
+    </SafeArea>
+  );
 }
-
-export default RstorantScreen
-const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   backgroundColor: "#f8f9fa",
-  //   marginTop: StatusBar.currentHeight || 0,
-  // },
-
-  // searchbarContainer: {
-  //   // paddingHorizontal: 16,
-  //   // paddingVertical: 12,
-  //   backgroundColor: "#f8f9fa",
-  //   // iOS Shadow
-  //   shadowColor: "#000",
-  //   shadowOffset: { width: 0, height: 2 },
-  //   shadowOpacity: 0.15,
-  //   shadowRadius: 3.5,
-  //   // Android Shadow
-  //   elevation: 5,
-   
-  //   margin:12
-  // },
-
-  // searchbar: {
-  //   borderRadius: 12,
-  //   backgroundColor: "white",
-  // },
-
-  // content: {
-  //   flex: 1,
-  //   backgroundColor: "green",
-  //   borderTopLeftRadius: 20,
-  //   borderTopRightRadius: 20,
-  //   marginTop: 10,
-  //   padding: 20,
-  // },
-
- 
-});

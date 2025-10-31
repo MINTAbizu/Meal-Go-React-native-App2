@@ -1,16 +1,12 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { Card } from "react-native-paper";
-import styled from "styled-components";
+import styled from "styled-components/native";
+import { FontAwesome, MaterialIcons } from "@expo/vector-icons"; // ⭐ & ✅ ❌ icons
 
-
-const Name = styled(Text)`
-  color: ${({ theme }) => theme.colors.ui.error};
-`
-
-const RestaurantCard=styled(Card)`
-  background-color: ${({theme})=>theme.colors.bg.primary};
-   margin: 10px;
+const RestaurantCard = styled(Card)`
+  background-color: ${({ theme }) => theme.colors.bg.primary};
+  margin: 10px;
   border-radius: 10px;
 
   /* Shadow for iOS */
@@ -21,38 +17,52 @@ const RestaurantCard=styled(Card)`
 
   /* Elevation for Android */
   elevation: 5;
- 
+`;
 
-`
-const CardCover=styled(Card.Cover)`
-margin:10px;
-`
-const Address=styled(Text)`
+const CardCover = styled(Card.Cover)`
+  margin: 10px;
+  border-radius: 10px;
+`;
+
+const CardContainer = styled(View)`
+  padding: 12px;
+`;
+
+const Name = styled(Text)`
+  color: ${({ theme }) => theme.colors.text.primary};
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 4px;
+`;
+
+const Address = styled(Text)`
   font-size: 14px;
-  color: hsla(162, 93%, 35%, 1.00);
+  color: ${({ theme }) => theme.colors.text.secondary};
   margin-bottom: 6px;
+`;
 
-`
-const Closed=styled(Text)`
-  
-  color: red;
- 
-
-`
-const Open=styled(Text)`
-  
-  color: green;
-
-`
-
-const StatusRow=styled(View)`
-flex-direction: row;
+const StatusRow = styled(View)`
+  flex-direction: row;
   align-items: center;
   gap: 10px;
-`
-const CardContainer =styled(View)`
-padding:12px
-`
+  margin-top: 6px;
+`;
+
+const Closed = styled(Text)`
+  color: red;
+  font-weight: bold;
+`;
+
+const Open = styled(Text)`
+  color: green;
+  font-weight: bold;
+`;
+
+const Rating = styled(View)`
+  flex-direction: row;
+  margin-vertical: 4px;
+`;
+
 export default function RestaurantInfo({ restaurant = {} }) {
   const {
     name = "Some Restaurant",
@@ -65,64 +75,43 @@ export default function RestaurantInfo({ restaurant = {} }) {
     isOpenNow = true,
   } = restaurant;
 
-  return (
-    <RestaurantCard elevation={5} >
-      <CardCover key={name}  source={{ uri: photos[0] }} />
-      <CardContainer >
-        <Name >{name}</Name>
-        <Address >{address}</Address>
+  // Create an array for rating stars
+  const ratingArray = Array.from(new Array(Math.floor(rating)));
 
-        <StatusRow >
+  return (
+    <RestaurantCard elevation={5}>
+      <CardCover key={name} source={{ uri: photos[0] }} />
+
+      <CardContainer>
+        <Name>{name}</Name>
+
+        <Rating>
+          {ratingArray.map((_, index) => (
+            <FontAwesome
+              key={`star-${index}`}
+              name="star"
+              size={18}
+              color="#FFD700"
+              style={{ marginRight: 4 }}
+            />
+          ))}
+        </Rating>
+
+        <Address>{address}</Address>
+
+        <StatusRow>
           {isClosedTemporarily && (
-            <Closed >CLOSED TEMPORARILY</Closed>
+            <Closed>
+              CLOSED TEMPORARILY <MaterialIcons name="error-outline" size={16} color="red" />
+            </Closed>
           )}
-          {isOpenNow && <Open >OPEN NOW</Open>}
+          {isOpenNow && (
+            <Open>
+              OPEN NOW <MaterialIcons name="check-circle" size={16} color="green" />
+            </Open>
+          )}
         </StatusRow>
       </CardContainer>
     </RestaurantCard>
   );
 }
-
-// const styles = StyleSheet.create({
-// //   card: {
-// //     // backgroundColor: "#fff",
-//     margin: 10,
-//     borderRadius: 10,
-//     elevation: 5,
-//     shadowColor: "#000",
-//     shadowOpacity: 0.2,
-//     shadowRadius: 4,
-//     shadowOffset: { width: 0, height: 2 },
-// //   },
-//   cover: {
-//     // borderTopLeftRadius: 10,
-//     // borderTopRightRadius: 10,
-//     margin:10
-//   },
-//   info: {
-//     padding: 12,
-//   },
-//   name: {
-//     fontSize: 18,
-//     fontWeight: "bold",
-//     marginBottom: 4,
-//   },
-//   address: {
-//     fontSize: 14,
-//     color: "#666",
-//     marginBottom: 6,
-//   },
-//   statusRow: {
-//     flexDirection: "row",
-//     alignItems: "center",
-//     gap: 10,
-//   },
-//   closed: {
-//     color: "red",
-//     fontWeight: "bold",
-//   },
-//   open: {
-//     color: "green",
-//     fontWeight: "bold",
-//   },
-// });
